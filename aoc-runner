@@ -1,0 +1,15 @@
+#!/usr/bin/fish
+
+argparse --name=aoc-runner -N 1 -- $argv
+
+set day $(printf "day%02d" $argv[1])
+set day_file "./src/bin/$day"
+
+cat header.txt
+echo
+
+if test -e "$day_file.ml"
+    ocaml "$day_file.ml"
+else
+    cargo run -q --bin $day
+end
