@@ -11,7 +11,7 @@ fn day_file(day: u8) -> PathBuf {
 pub fn input_lines(day: u8) -> impl Iterator<Item = String> {
     BufReader::new(std::fs::File::open(day_file(day)).unwrap())
         .lines()
-        .flatten()
+        .map_while(Result::ok)
 }
 
 pub fn input_str(day: u8) -> String {

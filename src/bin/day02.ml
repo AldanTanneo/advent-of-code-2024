@@ -46,21 +46,17 @@ let rec is_safe_init lst fst_invalid =
   | _ -> false
 ;;
 
-print_string "p1 = ";;
-
+print_string "p1 = ";
 print_int
   (List.fold_left
      (fun acc lst -> if is_safe_init lst true then acc + 1 else acc)
-     0 lines)
+     0 lines);
+print_newline ()
 ;;
 
-print_newline ();;
-print_string "p2 = ";;
-
+print_string "p2 = ";
 print_int
   (List.fold_left
      (fun acc lst -> if is_safe_init lst false then acc + 1 else acc)
-     0 lines)
-;;
-
+     0 lines);
 print_newline ()
