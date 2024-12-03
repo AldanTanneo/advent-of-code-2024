@@ -2,6 +2,9 @@ use std::io::{BufRead, BufReader};
 use std::path::PathBuf;
 
 fn day_file(day: u8) -> PathBuf {
+    if day == 0 {
+        return "test.txt".into();
+    }
     format!("input/day{day:02}.txt").into()
 }
 
