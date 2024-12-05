@@ -1,10 +1,10 @@
 fn main() {
     let (mut a, mut b): (Vec<_>, Vec<_>) = aoc::input_lines(1)
         .flat_map(|line| {
-            line.split_once("   ").and_then(|(a, b)| {
-                let a = a.parse::<u32>().ok()?;
-                let b = b.parse::<u32>().ok()?;
-                Some((a, b))
+            line.split_once("   ").map(|(a, b)| {
+                let a = aoc::parse_dec::<u32>(a);
+                let b = aoc::parse_dec::<u32>(b);
+                (a, b)
             })
         })
         .unzip();
