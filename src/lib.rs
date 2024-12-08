@@ -26,6 +26,36 @@ pub fn parse_dec<T: From<u8> + std::ops::Add<Output = T> + std::ops::Mul<Output 
         .fold(T::from(0), |acc, c| T::from(10) * acc + T::from(c & 0b1111))
 }
 
+pub fn gcd(mut u: u64, mut v: u64) -> u64 {
+    if u == 0 {
+        return v;
+    }
+    if v == 0 {
+        return u;
+    }
+
+    let shift = (u | v).trailing_zeros();
+    u >>= shift;
+    v >>= shift;
+    u >>= u.trailing_zeros();
+
+    loop {
+        v >>= v.trailing_zeros();
+
+        if u > v {
+            core::mem::swap(&mut u, &mut v);
+        }
+
+        v -= u; // here v >= u
+
+        if v == 0 {
+            break;
+        }
+    }
+
+    u << shift
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
