@@ -18,7 +18,7 @@ fn main() {
     let len = input.bytes().position(|x| x == b'\n').unwrap() as isize;
     let mut set = HashSet::new();
 
-    for (_, coords) in &coordinates {
+    for coords in coordinates.values() {
         for (x, fst) in coords.iter().enumerate() {
             for snd in &coords[x + 1..] {
                 let i1 = 2 * fst.0 - snd.0;
@@ -40,7 +40,7 @@ fn main() {
 
     set.clear();
 
-    for (_, coords) in &coordinates {
+    for coords in coordinates.values() {
         for (x, fst) in coords.iter().enumerate() {
             for snd in &coords[x + 1..] {
                 let di = snd.0 - fst.0;
@@ -51,7 +51,7 @@ fn main() {
                 } else if dj == 0 {
                     set.extend((0..len).map(|i| (i, fst.1)));
                 } else {
-                    let gcd = aoc::gcd(di.abs() as u64, dj.abs() as u64);
+                    let gcd = aoc::gcd(di.unsigned_abs() as u64, dj.unsigned_abs() as u64);
                     let di = di / gcd as isize;
                     let dj = dj / gcd as isize;
 

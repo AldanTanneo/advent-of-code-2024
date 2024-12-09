@@ -123,10 +123,8 @@ fn main() {
         if dir.step(&grid, &mut i, &mut j) {
             break;
         }
-        if (oi, oj) != (i, j) && detect_loop(&grid, start, (i, j)) {
-            if p2_set.insert((i, j)) {
-                p2 += 1;
-            }
+        if (oi, oj) != (i, j) && detect_loop(&grid, start, (i, j)) && p2_set.insert((i, j)) {
+            p2 += 1;
         }
     }
 

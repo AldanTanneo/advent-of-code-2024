@@ -3,13 +3,13 @@ fn main() {
 
     let p1: u64 = aoc::input_lines(7)
         .filter(|x| !x.is_empty())
-        .flat_map(|l| {
+        .filter_map(|l| {
             let (res, nums) = l.split_once(": ")?;
             let res = aoc::parse_dec::<u64>(res);
 
             for (i, n) in nums
                 .split_ascii_whitespace()
-                .map(|n| aoc::parse_dec::<u64>(n))
+                .map(aoc::parse_dec::<u64>)
                 .enumerate()
             {
                 if i == 0 {
@@ -36,13 +36,13 @@ fn main() {
 
     let p2: u64 = aoc::input_lines(7)
         .filter(|x| !x.is_empty())
-        .flat_map(|l| {
+        .filter_map(|l| {
             let (res, nums) = l.split_once(": ")?;
             let res = aoc::parse_dec::<u64>(res);
 
             for (i, n) in nums
                 .split_ascii_whitespace()
-                .map(|n| aoc::parse_dec::<u64>(n))
+                .map(aoc::parse_dec::<u64>)
                 .enumerate()
             {
                 if i == 0 {

@@ -57,7 +57,7 @@ fn main() {
             .iter()
             .skip(1)
             .step_by(2)
-            .cloned()
+            .copied()
             .enumerate()
             .find(|(_, (_, s))| *s >= size)
         {

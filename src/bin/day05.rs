@@ -6,7 +6,7 @@ fn main() {
 
     let mut constraints = constraints
         .split_ascii_whitespace()
-        .flat_map(|c| c.split_once('|'))
+        .filter_map(|c| c.split_once('|'))
         .map(|(a, b)| (aoc::parse_dec::<u32>(a), aoc::parse_dec::<u32>(b)))
         .collect::<Vec<_>>();
     constraints.sort_unstable();
@@ -19,9 +19,10 @@ fn main() {
     let mut p2 = 0;
 
     for u in &mut updates {
-        if constraints.iter().all(|(n, m)| {
-            !u.contains(n) || u.iter().take_while(|&p| p != n).find(|&p| p == m).is_none()
-        }) {
+        if constraints
+            .iter()
+            .all(|(n, m)| !u.contains(n) || !u.iter().take_while(|&p| p != n).any(|p| p == m))
+        {
             p1 += u[u.len() / 2];
         } else {
             u.sort_unstable_by(|a, b| {
