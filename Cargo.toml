@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+hashbrown = "0.15.2"
 itertools = "0.13.0"
 nom = "7.1.3"
 
