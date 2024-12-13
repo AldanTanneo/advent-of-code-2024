@@ -81,7 +81,7 @@ impl<'a> Grid<'a> {
         }
     }
 
-    pub fn len(&self) -> usize {
+    pub fn height(&self) -> usize {
         self.height
     }
 
@@ -90,11 +90,11 @@ impl<'a> Grid<'a> {
     }
 
     pub fn iter(&'a self) -> impl DoubleEndedIterator<Item = &'a [u8]> {
-        (0..self.len()).map(move |i| &self[i])
+        (0..self.height()).map(move |i| &self[i])
     }
 }
 
-impl<'a> std::ops::Index<usize> for Grid<'a> {
+impl std::ops::Index<usize> for Grid<'_> {
     type Output = [u8];
 
     fn index(&self, index: usize) -> &Self::Output {
@@ -134,14 +134,14 @@ impl VecGrid {
     }
 
     pub fn get(&self, y: usize, x: usize) -> Option<u8> {
-        if y < self.len() && x < self.width() {
+        if y < self.height() && x < self.width() {
             Some(self.data[y * self.width + x])
         } else {
             None
         }
     }
 
-    pub fn len(&self) -> usize {
+    pub fn height(&self) -> usize {
         self.height
     }
 
@@ -158,7 +158,7 @@ impl VecGrid {
     }
 
     pub fn iter(&self) -> impl DoubleEndedIterator<Item = &[u8]> {
-        (0..self.len()).map(move |i| &self[i])
+        (0..self.height()).map(move |i| &self[i])
     }
 
     pub fn iter_mut(&mut self) -> impl DoubleEndedIterator<Item = &mut [u8]> {

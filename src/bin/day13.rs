@@ -58,6 +58,8 @@ where
     .map(|(_, o)| o)
 }
 
+const P2_OFFSET: i64 = 10_000_000_000_000;
+
 fn main() {
     let input = aoc::input_str(13);
 
@@ -80,7 +82,7 @@ fn main() {
 
     let p2: i64 = separated_iter0(input.as_str(), tag("\n\n"), machine)
         .map(|Machine { a, b, prize: p }| {
-            let p = (p.0 + 10000000000000, p.1 + 10000000000000);
+            let p = (p.0 + P2_OFFSET, p.1 + P2_OFFSET);
             let delta = b.0 * a.1 - a.0 * b.1;
             let alpha = (p.1 * b.0 - p.0 * b.1) / delta;
             let beta = (p.0 * a.1 - p.1 * a.0) / delta;
@@ -93,5 +95,5 @@ fn main() {
         .sum();
 
     println!("p1 = {p1}");
-    println!("p1 = {p2}");
+    println!("p2 = {p2}");
 }

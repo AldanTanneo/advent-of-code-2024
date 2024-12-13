@@ -48,7 +48,7 @@ fn main() {
                     if (a & 127 != plant && c & 127 != plant)
                         || (a & 127 == plant && c & 127 == plant && b & 127 != plant)
                     {
-                        sides += 1
+                        sides += 1;
                     }
                 }
             }
@@ -57,7 +57,7 @@ fn main() {
         p1 += perimeter * area;
         p2 += sides * area;
 
-        while i < grid.len() {
+        while i < grid.height() {
             while j < grid.width() {
                 if grid[i][j] < 128 {
                     break;
@@ -71,11 +71,11 @@ fn main() {
             }
             i += 1;
         }
-        if i == grid.len() {
+        if i == grid.height() {
             break;
         }
     }
 
     println!("p1 = {p1}");
-    println!("p1 = {p2}");
+    println!("p2 = {p2}");
 }
