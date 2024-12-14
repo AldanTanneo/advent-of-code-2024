@@ -1,5 +1,6 @@
 const WIDTH: u64 = 101;
 const HEIGHT: u64 = 103;
+const MAX_WH: i64 = if WIDTH > HEIGHT { WIDTH } else { HEIGHT } as i64;
 
 const EGCD_WIDTH: i64 = aoc::extended_gcd(WIDTH, HEIGHT).1;
 const EGCD_HEIGHT: i64 = aoc::extended_gcd(WIDTH, HEIGHT).2;
@@ -42,7 +43,7 @@ fn main() {
     let mut min_varx = (0, u64::MAX);
     let mut min_vary = (0, u64::MAX);
 
-    for i in 1..=103 {
+    for i in 1..=MAX_WH {
         for r in &mut robots {
             r.step();
         }
