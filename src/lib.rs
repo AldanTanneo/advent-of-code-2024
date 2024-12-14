@@ -32,7 +32,7 @@ pub fn parse_dec<T: From<u8> + std::ops::Add<Output = T> + std::ops::Mul<Output 
         .fold(T::from(0), |acc, c| T::from(10) * acc + T::from(c & 0b1111))
 }
 
-pub fn gcd(mut u: u64, mut v: u64) -> u64 {
+pub const fn gcd(mut u: u64, mut v: u64) -> u64 {
     if u == 0 {
         return v;
     }
@@ -49,7 +49,9 @@ pub fn gcd(mut u: u64, mut v: u64) -> u64 {
         v >>= v.trailing_zeros();
 
         if u > v {
-            core::mem::swap(&mut u, &mut v);
+            let tmp = u;
+            u = v;
+            v = tmp;
         }
 
         v -= u; // here v >= u
@@ -60,6 +62,21 @@ pub fn gcd(mut u: u64, mut v: u64) -> u64 {
     }
 
     u << shift
+}
+
+pub const fn extended_gcd(u: u64, v: u64) -> (u64, i64, i64) {
+    let mut r = [u, v];
+    let mut s = [1, 0];
+    let mut t = [0, 1];
+
+    while r[1] != 0 {
+        let q = r[0].div_euclid(r[1]);
+        r = [r[1], r[0] - q * r[1]];
+        s = [s[1], s[0] - q as i64 * s[1]];
+        t = [t[1], t[0] - q as i64 * t[1]];
+    }
+
+    (r[0], s[0], t[0])
 }
 
 #[derive(Copy, Clone, Hash, PartialEq, Eq)]
