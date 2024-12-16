@@ -10,3 +10,6 @@ nom = "7.1.3"
 
 [profile.dev]
 opt-level = 1
+
+[profile.release]
+lto = true
