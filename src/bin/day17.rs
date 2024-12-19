@@ -1,5 +1,3 @@
-use std::usize;
-
 use itertools::Itertools;
 
 const REG_A: usize = 4;
