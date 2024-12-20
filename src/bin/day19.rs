@@ -1,7 +1,5 @@
 use std::num::NonZeroU16;
 
-use hashbrown::HashMap;
-
 #[derive(Clone, Copy, Debug)]
 struct Node {
     is_term: bool,
@@ -57,40 +55,30 @@ impl Tree {
         self.nodes[idx].is_term = true;
     }
 
-    fn search(&self, elt: &[u8], cache: &mut HashMap<usize, usize>) -> usize {
-        fn recurse(tree: &Tree, elt: &[u8], i: usize, cache: &mut HashMap<usize, usize>) -> usize {
-            if let Some(res) = cache.get(&i) {
-                return *res;
+    fn search(&self, elt: &[u8], buf: &mut Vec<usize>) -> usize {
+        buf.clear();
+        buf.resize(elt.len() + 1, 0);
+        buf[0] = 1;
+        for i in 0..buf.len() {
+            if buf[i] == 0 {
+                continue;
             }
-
             let mut j = i;
-            let mut node = &tree.nodes[0];
-            let mut res = 0;
-
+            let mut node = &self.nodes[0];
             while j < elt.len() {
                 let chr = elt[j];
                 let Some(idx) = node.next[chr_to_idx(chr)] else {
                     break;
                 };
                 j += 1;
-
-                node = &tree.nodes[idx.get() as usize];
+                node = &self.nodes[idx.get() as usize];
 
                 if node.is_term {
-                    res += recurse(tree, elt, j, cache);
+                    buf[j] += buf[i];
                 }
             }
-
-            if j == elt.len() && node.is_term {
-                res += 1;
-            }
-
-            cache.insert(i, res);
-            res
         }
-
-        cache.clear();
-        recurse(self, elt, 0, cache)
+        buf[buf.len() - 1]
     }
 }
 
@@ -107,9 +95,9 @@ fn main() {
     let mut p1 = 0;
     let mut p2 = 0;
 
-    let mut cache = HashMap::new();
+    let mut buf = Vec::with_capacity(100);
     for pattern in desired.split_ascii_whitespace() {
-        let tmp = tree.search(pattern.as_bytes(), &mut cache);
+        let tmp = tree.search(pattern.as_bytes(), &mut buf);
         if tmp != 0 {
             p1 += 1;
             p2 += tmp;
