@@ -67,12 +67,12 @@ fn bronkerbosch2(
     if let Some(u) = p.union(&x).next() {
         let pnu = p.difference(&map[u]).copied().collect::<Vec<_>>();
         for v in pnu {
-            let mut r2 = r.clone();
-            r2.push(v);
             let nv = &map[&v];
-            bronkerbosch2(map, r2, &p & nv, &x & nv, max);
-            if max.len() >= nv.len() {
-                break;
+            let p2 = &p & nv;
+            if r.len() + p2.len() >= max.len() {
+                let mut r2 = r.clone();
+                r2.push(v);
+                bronkerbosch2(map, r2, p2, &x & nv, max);
             }
             p.remove(&v);
             x.insert(v);
